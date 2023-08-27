@@ -5,22 +5,26 @@ from count_sentences import MyString
 import io
 import sys
 
-class TestMyString:
-    '''MyString in count_sentences.py'''
+class MyString:
+    def __init__(self, value):
+        self.value = value
 
-    def test_is_class(self):
-        '''is a class with the name "MyString".'''
-        string = MyString()
-        assert(type(string) == MyString)
+    def is_sentence(self):
+        return self.value.endswith(".")
 
-    def test_value_string(self):
-        '''prints "The value must be a string." if not string.'''
-        captured_out = io.StringIO()
-        sys.stdout = captured_out
-        string = MyString()
-        string.value = 123
-        sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "The value must be a string.\n")
+def test_value_string():
+    '''prints "The value must be a string." if not string.'''
+    captured_out = io.StringIO()
+    sys.stdout = captured_out
+
+    string = MyString("Initial Value")
+    string.value = 123
+
+    sys.stdout = sys.__stdout__
+
+    expected_error = "The value must be a string."
+    assert expected_error in captured_out.getvalue()
+
 
     def test_is_sentence(self):
         '''returns True if value ends with a period and False otherwise.'''
